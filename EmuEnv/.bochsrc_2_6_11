@@ -1,0 +1,22 @@
+# Initiation 
+# ------------------------------------------------------------------------------------
+memory: guest=32, host=32
+
+# Specify Bios 
+# ---------------------------------------------------------------------------------------
+romimage: file=../EmuTools/bochs-2.6.11/bios/BIOS-bochs-latest, options=fastboot
+vgaromimage: file=../EmuTools/bochs-2.6.11/bios/VGABIOS-elpin-2.40
+
+# Add storage device and specify boot device
+# -------------------------------------------------------------------------------------------
+ata0-master:  type=disk, path=./MBR.img, mode=flat, cylinders=6541, heads=16, spt=63, translation=auto
+boot: disk
+
+# Add external device
+# -------------------------------------------------------------------------------------------
+keyboard: user_shortcut=ctrl-alt-del
+
+# Add log file
+# -------------------------------------------------------------------------------------
+log: bochsout.txt
+debugger_log: debugger.out

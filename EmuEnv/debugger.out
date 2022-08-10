@@ -1,0 +1,40 @@
+Next at t=0
+(0) [0x0000fffffff0] f000:fff0 (unk. ctxt): jmpf 0xf000:e05b          ; ea5be000f0
+<bochs:1> ni
+:1: syntax error at 'ni'
+<bochs:2> n
+Next at t=1
+(0) [0x0000000fe05b] f000:e05b (unk. ctxt): xor ax, ax                ; 31c0
+<bochs:3> n
+Next at t=2
+(0) [0x0000000fe05d] f000:e05d (unk. ctxt): out 0x0d, al              ; e60d
+<bochs:4> 
+Next at t=3
+(0) [0x0000000fe05f] f000:e05f (unk. ctxt): out 0xda, al              ; e6da
+<bochs:5> 
+Next at t=4
+(0) [0x0000000fe061] f000:e061 (unk. ctxt): mov al, 0xc0              ; b0c0
+<bochs:6> 
+Next at t=5
+(0) [0x0000000fe063] f000:e063 (unk. ctxt): out 0xd6, al              ; e6d6
+<bochs:7> pbreak 0x7c00
+<bochs:8> c
+(0) Breakpoint 1, 0x00007c00 in ?? ()
+Next at t=20999946
+(0) [0x000000007c00] 0000:7c00 (unk. ctxt): mov ax, cs                ; 8cc8
+<bochs:9> n
+Next at t=20999947
+(0) [0x000000007c02] 0000:7c02 (unk. ctxt): mov ds, ax                ; 8ed8
+<bochs:10> 
+Next at t=20999948
+(0) [0x000000007c04] 0000:7c04 (unk. ctxt): mov ss, ax                ; 8ed0
+<bochs:11> 
+Next at t=20999949
+(0) [0x000000007c06] 0000:7c06 (unk. ctxt): mov es, ax                ; 8ec0
+<bochs:12> 
+Next at t=20999950
+(0) [0x000000007c08] 0000:7c08 (unk. ctxt): mov fs, ax                ; 8ee0
+<bochs:13> 
+Next at t=20999951
+(0) [0x000000007c0a] 0000:7c0a (unk. ctxt): mov gs, ax                ; 8ee8
+<bochs:14> (0).[20999951] [0x000000007c0a] 0000:7c0a (unk. ctxt): mov gs, ax                ; 8ee8

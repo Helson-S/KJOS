@@ -1,0 +1,51 @@
+     1                                  ; Main boot record
+     2                                  ; -----------------------------------------------
+     3                                  
+     4                                  section MBR vstart=0x7c00
+     5 00000000 8CC8                        mov ax, cs
+     6 00000002 8ED8                        mov ds, ax
+     7 00000004 8ED0                        mov ss, ax
+     8 00000006 8EC0                        mov es, ax
+     9 00000008 8EE0                        mov fs, ax
+    10 0000000A 8EE8                        mov gs, ax
+    11 0000000C 89C4                        mov sp, ax
+    12                                  
+    13                                  ; Set video mode
+    14 0000000E B80100                      mov ax, 0x1
+    15 00000011 CD10                        int 0x10
+    16                                  
+    17                                  ; Select a page and set
+    18                                  ;---------------------------------------------------
+    19 00000013 B80005                      mov ax, 0x0500
+    20 00000016 CD10                        int 0x10
+    21                                  
+    22                                  ; Clear screen by uprolling the screen
+    23 00000018 B80006                      mov ax, 0x0600
+    24 0000001B BB0000                      mov bx, 0x0
+    25 0000001E B90000                      mov cx, 0x0
+    26 00000021 BA4F18                      mov dx, 0x184f
+    27 00000024 CD10                        int 0x10
+    28                                  
+    29                                  ; Set cursor in page zero
+    30 00000026 B80002                      mov ax, 0x0200
+    31 00000029 31DB                        xor bx, bx
+    32 0000002B BA0001                      mov dx, 0x0100
+    33 0000002E CD10                        int 0x10
+    34                                  
+    35                                  ; Write string
+    36 00000030 B80013                      mov ax, 0x1300      ; mode 1
+    37 00000033 BB4100                      mov bx, 0x0041      ; Blue background, Red foreground, 0x14. Red background, Blue foreground, 0x41.
+    38 00000036 66B90C000000                mov ecx, 0xc         ; length of string. 12 = 0xc
+    39 0000003C BA1005                      mov dx, 0x0510      ; (row, column)
+    40 0000003F BD[4600]                    mov bp, message
+    41 00000042 CD10                        int 0x10
+    42 00000044 EBFE                        jmp $
+    43                                  
+    44                                  ; data stored
+    45 00000046 53782C203230323120-         message db "Sx, 2021 NB"
+    45 0000004F 4E42               
+    46 00000051 00<rept>                    times 510 - ($ - $$) db 0
+    47 000001FE 55AA                        dw 0xaa55
+    48                                  
+    49                                  ; Macro used
+    50                                  [map symbols MBR.map]
