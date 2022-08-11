@@ -35,17 +35,92 @@ SECTION MBR vstart=0x7c00
     xor dx, dx
     int 0x10
 
-    ; write string 
-    mov ax, 0x1300
-    mov bp, message
-    mov cx, 21
-    mov dx, 0x0510      ; (row, column)
-    mov bx, 0x0041
-    int 0x10
-    jmp $
+    ; use video memory. 0xc1 flash.
+    mov byte [gs:0x00], 'H'
+    mov byte [gs:0x01], 0x41
+
+    mov byte [gs:0x02], 'e'
+    mov byte [gs:0x03], 0x41
+
+    mov byte [gs:0x04], 'l'
+    mov byte [gs:0x05], 0x41
+
+    mov byte [gs:0x06], 'l'
+    mov byte [gs:0x07], 0x41
+
+    mov byte [gs:0x08], 'o'
+    mov byte [gs:0x09], 0x41
+
+    mov eax, LOADER_START_SECTOR
+    mov ebx, LOADER_BASE_ADDR
+    mov ecx, 0x1                    ; sector count
+
+    call diskloader_to_addr
+    jmp LOADER_BASE_ADDR
 
 
-    ; data
-    message db 'Hello OS, I am helson'
-    pad_data times $$+510-$ db 0
+diskloader_to_addr:
+    mov edi, eax
+    mov esi, ecx
+
+    ; set Features register, 0x1f1
+    ; mov dx, 0x1f1
+    ; mov ax, 0x0
+    ; out dx, ax
+
+    ; set sector count
+    mov eax, esi
+    mov dx, 0x1f2
+    out dx, al
+
+    ; set LBA28
+    mov eax, edi
+
+    mov dx, 0x1f3
+    out dx, al
+
+    mov dx, 0x1f4
+    shr eax, 8
+    out dx, al
+
+    mov dx, 0x1f5
+    shr eax, 8
+    out dx, al
+
+    ; set device register
+    mov dx, 0x1f6
+    shr eax, 8
+    and al, 0xf
+    or al, 0xe0
+    out dx, al 
+
+    mov dx, 0x1f7
+    mov ax, 0x20
+    out dx, al
+
+.if_ready:
+    mov dx, 0x1f7
+    in al, dx
+    and al, 0x88
+    cmp al, 0x8
+    jnz .if_ready
+
+    ; calculate how many times to read.
+    mov ax, 256
+    mov dx, si
+    mul dx
+    mov cx, ax
+
+    mov dx, 0x1f0
+.loop_read:
+    in ax, dx
+    mov word [bx], ax
+    add bx, 2
+    loop .loop_read
+
+    ret
+
+
+    ; define padding data
+    padding_data times $$ + 510 - $ db 0
     dw 0xaa55

@@ -30,7 +30,7 @@
 00000000000i[     ]   SB16 support: no
 00000000000i[     ]   USB support: no
 00000000000i[     ]   VGA extension support: vbe
-00000000000i[MEM0 ] allocated memory at 0x7f3afaf29010. after alignment, vector=0x7f3afaf2a000
+00000000000i[MEM0 ] allocated memory at 0x7fa072b6f010. after alignment, vector=0x7fa072b70000
 00000000000i[MEM0 ] 32.00MB
 00000000000i[MEM0 ] mem block size = 0x00100000, blocks=32
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('/home/helson/bochs/share/bochs/BIOS-bochs-latest')
@@ -40,7 +40,7 @@
 00000000000i[DEV  ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
 00000000000i[     ] init_dev of 'cmos' plugin device by virtual method
 00000000000i[CMOS ] Using local time for initial clock
-00000000000i[CMOS ] Setting initial clock to: Wed Aug 10 20:41:17 2022 (time0=1660135277)
+00000000000i[CMOS ] Setting initial clock to: Thu Aug 11 19:23:46 2022 (time0=1660217026)
 00000000000i[     ] init_dev of 'dma' plugin device by virtual method
 00000000000i[DMA  ] channel 4 used by cascade
 00000000000i[     ] init_dev of 'pic' plugin device by virtual method
@@ -65,7 +65,8 @@
 00000000000i[KBD  ] will paste characters every 400 keyboard ticks
 00000000000i[     ] init_dev of 'harddrv' plugin device by virtual method
 00000000000i[HD   ] HD on ata0-0: '/home/helson/Desktop/nos/NNOS_learn/EmuEnv/MBR.img', 'flat' mode
-00000000000i[IMG  ] hd_size: 512
+00000000000i[IMG  ] hd_size: 1610
+00000000000p[IMG  ] >>PANIC<< size of disk image must be multiple of 512 bytes
 00000000000i[HD   ] ata0-0: using specified geometry: CHS=121/16/63
 00000000000p[HD   ] >>PANIC<< ata0-0: specified geometry doesn't fit on disk image
 00000000000i[HD   ] translation on ata0-0 set to 'none'
@@ -191,26 +192,26 @@
 00005748869i[BIOS ] IDE time out
 00017824347i[BIOS ] Booting from 0000:7c00
 00018400000i[XGUI ] charmap update. Font Height is 16
-00367041022i[     ] Ctrl-C detected in signal handler.
-00367041023i[XGUI ] Mouse capture off
-00367041023i[     ] dbg: Quit
-00367041023i[CPU0 ] CPU is in real mode (active)
-00367041023i[CPU0 ] CS.mode = 16 bit
-00367041023i[CPU0 ] SS.mode = 16 bit
-00367041023i[CPU0 ] EFER   = 0x00000000
-00367041023i[CPU0 ] | EAX=00001300  EBX=00000041  ECX=00090015  EDX=00000510
-00367041023i[CPU0 ] | ESP=00007c00  EBP=00007c48  ESI=000e0000  EDI=0000ffac
-00367041023i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf ZF af PF cf
-00367041023i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
-00367041023i[CPU0 ] |  CS:0000( 0004| 0|  0) 00000000 0000ffff 0 0
-00367041023i[CPU0 ] |  DS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
-00367041023i[CPU0 ] |  SS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
-00367041023i[CPU0 ] |  ES:0000( 0005| 0|  0) 00000000 0000ffff 0 0
-00367041023i[CPU0 ] |  FS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
-00367041023i[CPU0 ] |  GS:b800( 0005| 0|  0) 000b8000 0000ffff 0 0
-00367041023i[CPU0 ] | EIP=00007c46 (00007c46)
-00367041023i[CPU0 ] | CR0=0x60000010 CR2=0x00000000
-00367041023i[CPU0 ] | CR3=0x00000000 CR4=0x00000000
-00367041023i[CMOS ] Last time is 1660135368 (Wed Aug 10 20:42:48 2022)
-00367041023i[XGUI ] Exit
-00367041023i[CTRL ] quit_sim called with exit code 0
+990448492990i[     ] Ctrl-C detected in signal handler.
+990448492990i[XGUI ] Mouse capture off
+990448492990i[     ] dbg: Quit
+990448492990i[CPU0 ] CPU is in real mode (active)
+990448492990i[CPU0 ] CS.mode = 16 bit
+990448492990i[CPU0 ] SS.mode = 16 bit
+990448492990i[CPU0 ] EFER   = 0x00000000
+990448492990i[CPU0 ] | EAX=00000000  EBX=00000b00  ECX=00000000  EDX=000001f0
+990448492990i[CPU0 ] | ESP=00007c00  EBP=00000000  ESI=00000001  EDI=00000002
+990448492990i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf zf AF PF cf
+990448492990i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+990448492990i[CPU0 ] |  CS:0000( 0004| 0|  0) 00000000 0000ffff 0 0
+990448492990i[CPU0 ] |  DS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+990448492990i[CPU0 ] |  SS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+990448492990i[CPU0 ] |  ES:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+990448492990i[CPU0 ] |  FS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+990448492990i[CPU0 ] |  GS:b800( 0005| 0|  0) 000b8000 0000ffff 0 0
+990448492990i[CPU0 ] | EIP=00000948 (00000948)
+990448492990i[CPU0 ] | CR0=0x60000010 CR2=0x00000000
+990448492990i[CPU0 ] | CR3=0x00000000 CR4=0x00000000
+990448492990i[CMOS ] Last time is 1660464638 (Sun Aug 14 16:10:38 2022)
+990448492990i[XGUI ] Exit
+990448492990i[CTRL ] quit_sim called with exit code 0
