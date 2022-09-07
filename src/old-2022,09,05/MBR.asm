@@ -53,15 +53,15 @@ SECTION MBR vstart=0x7c00
 
     mov eax, LOADER_START_SECTOR
     mov ebx, LOADER_BASE_ADDR
-    mov ecx, 0x10                    ; sector count
+    mov ecx, 0x1                    ; sector count
 
     call diskloader_to_addr
     jmp LOADER_BASE_ADDR
 
 
 diskloader_to_addr:
-    mov edi, eax ; edi is LOADER_START_SECTOR
-    mov esi, ecx ; esi is sector count
+    mov edi, eax
+    mov esi, ecx
 
     ; set Features register, 0x1f1
     ; mov dx, 0x1f1
@@ -104,10 +104,6 @@ diskloader_to_addr:
     and al, 0x88
     cmp al, 0x8
     jnz .if_ready
-
-    ; check if all sector is read
-    mov dx, 0x1f2
-    in al, dx
 
     ; calculate how many times to read.
     mov ax, 256

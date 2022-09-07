@@ -14,11 +14,10 @@ boot: MBR.asm
 
 loader: loader.asm
 	$(CC) $(CFLAGS) loader.bin $<
-	dd if=loader.bin of=MBR.img bs=512 count=16 seek=2 conv=notrunc,sync
+	dd if=loader.bin of=MBR.img bs=512 count=1 seek=2 conv=notrunc
 	cp MBR.img ./EmuEnv
 
 clean: $(OBJS)
-	rm MBR.bin
-	rm loader.bin
-	rm MBR.img
+	rm $<
+	rm MBR.lst MBR.map MBR.img
 	rm ./EmuEnv/MBR.img
