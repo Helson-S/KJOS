@@ -81,7 +81,6 @@ p_mode_start:
     mov ax, SELECTOR_VIDEO
     mov gs, ax
 
-    ; line 4
     mov byte [gs:0x1e0], 'p'
     mov byte [gs:0x1e1], 0x41
 
@@ -99,101 +98,5 @@ p_mode_start:
 
     mov byte [gs:0x1ea], 'e'
     mov byte [gs:0x1eb], 0x41
-
-
-
-    jmp page_start
-    ; ----------- some function about page mapping ---------------------
-
-setup_page:
-    ; x64 invoke convention
-    mov edi, PDE_pos
-    mov esi, 0
-    mov ecx, 0x3000 ; 4096*3 = 0x3000
-.clear_page_area:
-    mov byte [edi + esi], 0
-    inc esi
-    loop .clear_page_area
-
-    ; syscall convention
-    ; create PDE
-    mov eax, PDE_pos
-    mov ebx, PDE_pos + 0x1000
-    or ebx, PG_P | PG_RW_W | PG_US_U
-    mov [eax], ebx
-    mov [eax + 0xc00], ebx
-    sub ebx, 0x1000
-    mov [eax + 0xffc], ebx
-
-    ; create PTE, syscall convention
-    mov eax, PDE_pos + 0x1000
-    mov ebx, 0 | PG_P | PG_RW_W | PG_US_U
-    mov edx, 0
-    mov ecx, 256
-.PTE_In_Low_1M:
-    mov [eax + edx*4], ebx
-    add ebx, 4096
-    inc edx
-    loop .PTE_In_Low_1M
-
-    ; Create PDE from 769 to 1022
-    mov eax, PDE_pos
-    add eax, 4 * 769
-    mov ebx, PDE_pos
-    add ebx, 0x2000
-    or ebx, PG_P | PG_RW_W | PG_US_U
-    mov edx, 0
-    mov ecx, 254
-.PDE_From769_To1022:
-    mov [eax + edx*4], ebx
-    add ebx, 0x1000
-    inc edx
-    loop .PDE_From769_To1022
-
-    ret
-
-page_start:
-    call setup_page
-    sgdt [GDT_PTR]
-
-    ; modify VIDEO Descriptor. Adjust it's virtual address to PDE 768
-    mov eax, GDT_PTR
-    add eax, 0x2
-    mov ebx, [eax + 3 * 8 + 4]
-    or ebx, 0xc0000000 ; 0xc0000000 = 768 >> 2 << 24
-    mov [eax + 3*8 + 4], ebx
-
-    ; modify GDT_PTR
-    mov eax, GDT_PTR
-    add eax, 0x2
-    mov ebx, [eax]
-    or ebx, 0xc0000000 ; 0xc0000000 = 768 << 22
-    mov [eax], ebx
-
-    ; set cr3
-    mov eax, PDE_pos
-    mov cr3, eax
-    
-    ; Enable paging
-    mov eax, cr0
-    or eax, 0x80000000 ; 0x80000000 = 0x1 << 31
-    mov cr0, eax
-
-    ; reload GDT
-    lgdt [GDT_PTR]
-
-    ; Test for paging
-    ; line 5
-    mov byte [gs:0x280], 'P'
-    mov byte [gs:0x281], 0x41
-
-    mov byte [gs:0x282], 'A'
-    mov byte [gs:0x283], 0x41
-
-    mov byte [gs:0x284], 'G'
-    mov byte [gs:0x285], 0x41
-
-    mov byte [gs:0x286], 'E'
-    mov byte [gs:0x287], 0x41
 
     jmp $
